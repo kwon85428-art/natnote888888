@@ -1,0 +1,505 @@
+/**
+ * 管理后台设计体系（由 AdminLayout 引入，仅作用于 .admin-app 内）
+ */
+.admin-app {
+  --admin-accent: #2563eb;
+  --admin-accent-hover: #1d4ed8;
+  --admin-accent-soft: #eff6ff;
+  --admin-accent-muted: #dbeafe;
+  --admin-surface: #ffffff;
+  --admin-surface-raised: #fafbfc;
+  --admin-border: #e2e8f0;
+  --admin-border-soft: #eef2f6;
+  --admin-muted: #64748b;
+  --admin-text: #0f172a;
+  --admin-text-secondary: #334155;
+  --admin-page-bg: #f1f5f9;
+  --admin-radius: 10px;
+  --admin-radius-lg: 14px;
+  --admin-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --admin-shadow: 0 1px 3px rgba(15, 23, 42, 0.07), 0 4px 14px rgba(15, 23, 42, 0.04);
+  --admin-shadow-lg: 0 8px 28px rgba(15, 23, 42, 0.1);
+
+  --el-color-primary: #2563eb;
+  --el-color-primary-light-3: #60a5fa;
+  --el-color-primary-light-5: #93c5fd;
+  --el-color-primary-light-7: #bfdbfe;
+  --el-color-primary-light-9: #eff6ff;
+  --el-color-primary-dark-2: #1d4ed8;
+  --el-border-radius-base: 8px;
+  --el-border-radius-small: 6px;
+  /* 后台正文 14px，与 Element 默认密度一致；字号均用 rem 令牌 */
+  --fs-micro: 0.75rem;
+  --fs-caption: 0.8125rem;
+  --fs-small: 0.875rem;
+  --fs-body: 0.875rem;
+  --fs-lead: 0.9375rem;
+  --fs-title-sm: 1rem;
+  --fs-title: 1.125rem;
+  --fs-title-lg: 1.25rem;
+  --fs-display: 1.5rem;
+  --el-font-size-base: 0.875rem;
+}
+
+/* ---------- 主区域 ---------- */
+.admin-app .admin-main-inner {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.admin-app .admin-main {
+  padding: 16px 18px 28px;
+  background:
+    radial-gradient(ellipse 120% 80% at 100% -20%, rgba(37, 99, 235, 0.06), transparent 50%),
+    var(--admin-page-bg);
+}
+
+.admin-app .admin-page {
+  max-width: none;
+  margin: 0;
+  animation: admin-page-in 0.35s ease both;
+}
+
+@keyframes admin-page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------- 页头 ---------- */
+.admin-app .admin-page-head {
+  margin: 0 0 16px;
+  padding: 0 0 0 14px;
+  border-left: 3px solid var(--admin-accent);
+}
+
+.admin-app .admin-page-title {
+  margin: 0 0 6px;
+  font-size: var(--fs-title-lg);
+  font-weight: 700;
+  color: var(--admin-text);
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+}
+
+.admin-app .admin-page-desc {
+  margin: 0;
+  font-size: var(--fs-small);
+  color: var(--admin-muted);
+  line-height: 1.6;
+  max-width: 68ch;
+}
+
+/* ---------- 设置 / 表单面板 ---------- */
+.admin-app .admin-panel {
+  width: 100%;
+  max-width: none;
+  padding: 20px 24px 12px;
+  border-radius: var(--admin-radius-lg);
+  border: 1px solid var(--admin-border);
+  background: var(--admin-surface);
+  box-shadow: var(--admin-shadow);
+}
+
+.admin-app .admin-panel .el-form-item {
+  margin-bottom: 20px;
+}
+
+/* 管理表单：弹窗与设置页共用，标签单行右对齐 */
+.admin-form.el-form--label-right .el-form-item {
+  align-items: flex-start;
+}
+
+.admin-form.el-form--label-right .el-form-item__label {
+  white-space: nowrap;
+  word-break: keep-all;
+  line-height: 32px;
+  min-height: 32px;
+  height: auto;
+  padding-right: 12px;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.admin-form.el-form--label-right .el-form-item:has(.el-textarea) .el-form-item__label {
+  line-height: 1.45;
+  padding-top: 6px;
+}
+
+.admin-app .admin-panel .el-form-item__label,
+.admin-form.el-form--label-right .el-form-item__label {
+  font-weight: 500;
+  color: var(--admin-text-secondary);
+}
+
+.admin-app .admin-panel .el-divider {
+  margin: 28px 0 22px;
+}
+
+.admin-app .admin-panel .el-divider__text {
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--admin-muted);
+  background: var(--admin-surface);
+  padding: 0 12px;
+}
+
+.admin-app .admin-form-hint {
+  margin: 6px 0 0;
+  font-size: var(--fs-caption);
+  color: var(--admin-muted);
+  line-height: 1.55;
+}
+
+.admin-app .admin-form-hint--inline {
+  margin: 0;
+  flex: 1;
+  min-width: 200px;
+}
+
+.admin-app .admin-form-hint code,
+.admin-app .stats-page__hint code {
+  font-size: var(--fs-micro);
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #f1f5f9;
+  border: 1px solid var(--admin-border-soft);
+  color: #475569;
+}
+
+.admin-app .admin-switch-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+}
+
+.admin-app .admin-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-app .admin-logo-row__preview {
+  flex-shrink: 0;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--admin-border-soft);
+  background: var(--admin-surface-raised);
+}
+
+/* ---------- 工具栏 + 表格 + 分页（一体化） ---------- */
+.admin-app .admin-stack {
+  border-radius: var(--admin-radius-lg);
+  border: 1px solid var(--admin-border);
+  background: var(--admin-surface);
+  box-shadow: var(--admin-shadow);
+  overflow: hidden;
+}
+
+.admin-app .admin-stack > .toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  margin-bottom: 0;
+  padding: 14px 18px;
+  border: none;
+  border-bottom: 1px solid var(--admin-border-soft);
+  border-radius: 0;
+  box-shadow: none;
+  background: linear-gradient(180deg, #fcfdff 0%, #f8fafc 100%);
+}
+
+.admin-app .admin-stack > .toolbar .toolbar__spacer,
+.admin-app .toolbar .toolbar__spacer {
+  flex: 1;
+  min-width: 8px;
+}
+
+.admin-app .admin-stack > .toolbar .el-input,
+.admin-app .admin-stack > .toolbar .el-select {
+  min-width: 0;
+}
+
+.admin-app .admin-stack > .admin-table.el-table,
+.admin-app .admin-stack > .el-table {
+  border-radius: 0 !important;
+  --el-table-header-bg-color: #f8fafc;
+  --el-table-header-text-color: #475569;
+  --el-table-row-hover-bg-color: #f8fafc;
+  --el-table-current-row-bg-color: #eff6ff;
+  font-size: var(--fs-caption);
+}
+
+.admin-app .admin-stack > .admin-table .el-table__header th,
+.admin-app .admin-stack > .el-table .el-table__header th {
+  font-weight: 600;
+  font-size: var(--fs-caption);
+}
+
+.admin-app .admin-stack > .pager-row,
+.admin-app .admin-stack > .pagination-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 0;
+  padding: 12px 18px;
+  border-top: 1px solid var(--admin-border-soft);
+  background: var(--admin-surface-raised);
+}
+
+/* 独立工具栏 */
+.admin-app .admin-main .toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow-sm);
+}
+
+.admin-app .admin-main .pager-row,
+.admin-app .admin-main .pagination-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 4px;
+}
+
+.admin-app .admin-table-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 4px;
+}
+
+.admin-app .admin-table-actions .el-button.is-link {
+  padding: 4px 6px;
+  font-weight: 500;
+}
+
+.admin-app .admin-icon-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent);
+}
+
+.admin-app .admin-icon-cell--muted {
+  background: #f1f5f9;
+  color: #94a3b8;
+}
+
+.admin-app .admin-cell-muted {
+  color: #94a3b8;
+  font-size: var(--fs-caption);
+}
+
+/* ---------- 表格（通用） ---------- */
+.admin-app .admin-main .el-table {
+  --el-table-border-color: var(--admin-border-soft);
+  --el-table-header-bg-color: #f8fafc;
+  --el-table-header-text-color: #475569;
+  --el-table-row-hover-bg-color: #f8fafc;
+  border-radius: var(--admin-radius);
+  overflow: hidden;
+  font-size: var(--fs-caption);
+}
+
+.admin-app .admin-main .el-card {
+  border-radius: var(--admin-radius-lg);
+  border: 1px solid var(--admin-border);
+  box-shadow: var(--admin-shadow-sm);
+}
+
+.admin-app .admin-main .el-card + .el-card {
+  margin-top: 14px;
+}
+
+.admin-app .admin-main .el-card__header {
+  font-weight: 600;
+  font-size: var(--fs-body);
+  color: var(--admin-text-secondary);
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--admin-border-soft);
+}
+
+/* 工具栏字段宽度 */
+.admin-app .toolbar-field--q {
+  width: 200px;
+  max-width: 100%;
+}
+
+.admin-app .toolbar-field--q-sm {
+  width: 180px;
+  max-width: 100%;
+}
+
+.admin-app .toolbar-field--cat {
+  width: 160px;
+  max-width: 100%;
+}
+
+.admin-app .toolbar-field--type {
+  width: 140px;
+  max-width: 100%;
+}
+
+.admin-app .toolbar-field--grow {
+  flex: 1;
+  min-width: 160px;
+  max-width: 360px;
+}
+
+/* ---------- 按钮与输入 ---------- */
+.admin-app .el-button {
+  font-weight: 500;
+  border-radius: var(--el-border-radius-base);
+}
+
+.admin-app .el-button--primary {
+  --el-button-bg-color: var(--admin-accent);
+  --el-button-border-color: var(--admin-accent);
+  --el-button-hover-bg-color: var(--admin-accent-hover);
+  --el-button-hover-border-color: var(--admin-accent-hover);
+}
+
+.admin-app .el-input__wrapper,
+.admin-app .el-textarea__inner {
+  border-radius: var(--el-border-radius-base);
+}
+
+.admin-app .el-tag {
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+/* ---------- 弹窗（挂载到 body，使用 .admin-dialog 类名） ---------- */
+.el-dialog.admin-dialog {
+  --admin-text: #0f172a;
+  --admin-text-secondary: #334155;
+  --admin-border: #e2e8f0;
+  --admin-border-soft: #eef2f6;
+  --admin-surface-raised: #fafbfc;
+  --admin-radius-lg: 14px;
+  --admin-shadow-lg: 0 8px 28px rgba(15, 23, 42, 0.1);
+
+  display: flex;
+  flex-direction: column;
+  max-height: min(90vh, 900px);
+  margin: var(--el-dialog-margin-top, 15vh) auto 16px;
+  border-radius: var(--admin-radius-lg);
+  box-shadow: var(--admin-shadow-lg);
+}
+
+.el-dialog.admin-dialog .el-dialog__header {
+  flex-shrink: 0;
+  padding: 18px 22px 14px;
+  margin-right: 0;
+  border-bottom: 1px solid var(--admin-border-soft);
+  background: linear-gradient(180deg, #fff 0%, #fafbfc 100%);
+}
+
+.el-dialog.admin-dialog .el-dialog__title {
+  font-weight: 700;
+  font-size: var(--fs-lead);
+  color: var(--admin-text);
+  letter-spacing: -0.02em;
+}
+
+.el-dialog.admin-dialog .el-dialog__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 20px 22px 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.el-dialog.admin-dialog .el-dialog__body .el-input,
+.el-dialog.admin-dialog .el-dialog__body .el-textarea,
+.el-dialog.admin-dialog .el-dialog__body .el-select {
+  width: 100%;
+}
+
+.el-dialog.admin-dialog .el-dialog__body .admin-form.el-form--label-right .el-form-item__content {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.el-dialog.admin-dialog .el-dialog__body .el-form--default .el-form-item:last-of-type,
+.el-dialog.admin-dialog .el-dialog__body .el-form--label-top .el-form-item:last-of-type {
+  margin-bottom: 8px;
+}
+
+.el-dialog.admin-dialog .el-dialog__footer {
+  flex-shrink: 0;
+  padding: 14px 22px 18px;
+  border-top: 1px solid var(--admin-border);
+  background: var(--admin-surface-raised);
+}
+
+/* 锁滚动时避免整页横向抖动（配合 append-to-body） */
+html.el-popup-parent--hidden {
+  width: 100% !important;
+}
+
+.admin-app .admin-code-block {
+  margin-top: 12px;
+  padding: 12px 14px;
+  max-height: 220px;
+  overflow: auto;
+  font-size: var(--fs-micro);
+  line-height: 1.5;
+  color: #475569;
+  background: #f8fafc;
+  border: 1px solid var(--admin-border-soft);
+  border-radius: var(--admin-radius);
+}
+
+.admin-app .admin-dialog-hint {
+  margin: 0 0 12px;
+  font-size: var(--fs-caption);
+  color: var(--admin-muted);
+  line-height: 1.5;
+}
+
+.admin-app .admin-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.admin-app .admin-form-hint--dialog {
+  margin-left: 10px;
+  font-size: var(--fs-caption);
+  color: var(--admin-muted);
+}
+
+/* ---------- 加载遮罩 ---------- */
+.admin-app .el-loading-mask {
+  border-radius: var(--admin-radius-lg);
+  background-color: rgba(248, 250, 252, 0.75);
+}

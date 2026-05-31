@@ -1,0 +1,63 @@
+# --- Python ---
+backend/.venv/
+**/__pycache__/
+**/*.py[cod]
+**/*.pyo
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+*.egg-info/
+htmlcov/
+.coverage
+
+# --- Secrets & local env (keep *.example templates) ---
+backend/.env
+backend/.env.local
+.env
+.env.local
+.env.*.local
+!.env.example
+!**/.env.example
+!**/.env.production.example
+
+# --- Runtime data & locks ---
+backend/data/*
+!backend/data/.gitkeep
+backend/data/logs/
+backend/data/.log_cleanup.leader.lock
+backend/.run/
+frontend/.run/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# --- User uploads (runtime only) ---
+backend/uploads/**
+!backend/uploads/.gitkeep
+
+# --- Local archives / accidental bundles ---
+*.zip
+*.tar.gz
+*.7z
+*.rar
+
+# --- Node / frontend build ---
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.production
+frontend/.env.*.local
+frontend/.vite/
+frontend/.cache/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+.idea/
+.vscode/
+!.vscode/extensions.json
+*.swp
+*~

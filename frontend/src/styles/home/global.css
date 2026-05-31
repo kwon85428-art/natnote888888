@@ -1,0 +1,93 @@
+.cat-drawer__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 0 12px;
+  --site-cat-drawer-pad-y: 12px;
+  --site-cat-drawer-pad-x: 14px;
+  --site-cat-drawer-inner-gap: 4px;
+  --site-cat-drawer-name-lh: 1.35;
+  --site-cat-drawer-desc-lh: 1.45;
+  --site-cat-drawer-desc-lines: 2;
+  --site-cat-drawer-text-h: calc(
+    var(--fs-body) * var(--site-cat-drawer-name-lh) + var(--site-cat-drawer-inner-gap) +
+      var(--fs-small) * var(--site-cat-drawer-desc-lh) * var(--site-cat-drawer-desc-lines)
+  );
+  --site-cat-drawer-item-h: calc(var(--site-cat-drawer-pad-y) * 2 + var(--site-cat-drawer-text-h));
+}
+.cat-drawer__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  min-height: var(--site-cat-drawer-item-h);
+  height: var(--site-cat-drawer-item-h);
+  padding: var(--site-cat-drawer-pad-y) var(--site-cat-drawer-pad-x);
+  box-sizing: border-box;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fafafa;
+  cursor: pointer;
+  text-align: left;
+  overflow: hidden;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+.cat-drawer__item:hover {
+  background: #fff;
+  border-color: #d1d5db;
+}
+.cat-drawer__item--active {
+  border-color: #93c5fd;
+  background: #eff6ff;
+}
+.cat-drawer__item-ico {
+  color: #1d4ed8;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.cat-drawer__item-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--site-cat-drawer-inner-gap);
+  min-width: 0;
+  min-height: var(--site-cat-drawer-text-h);
+  justify-content: flex-start;
+}
+.cat-drawer__item-name {
+  flex: 0 0 auto;
+  min-height: calc(var(--fs-body) * var(--site-cat-drawer-name-lh));
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: #111827;
+  line-height: var(--site-cat-drawer-name-lh);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cat-drawer__item-desc {
+  flex: 1 1 auto;
+  min-height: calc(
+    var(--fs-small) * var(--site-cat-drawer-desc-lh) * var(--site-cat-drawer-desc-lines)
+  );
+  font-size: var(--fs-small);
+  color: #6b7280;
+  line-height: var(--site-cat-drawer-desc-lh);
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: var(--site-cat-drawer-desc-lines);
+  line-clamp: var(--site-cat-drawer-desc-lines);
+  -webkit-box-orient: vertical;
+}
+.cat-drawer__item-desc:empty {
+  visibility: hidden;
+}
+
+@media (max-width: 900px) {
+  main.home + .platform-footer {
+    padding-bottom: calc(14px + 58px + env(safe-area-inset-bottom, 0px));
+  }
+}

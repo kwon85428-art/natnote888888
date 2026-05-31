@@ -1,0 +1,36 @@
+# NavNote 后端 systemd 示例（可选）
+#
+# 手动启动：cd backend && ./service.sh start prod
+#
+# 使用前将 __NAVNOTE_ROOT__ 替换为安装根目录绝对路径（与 nginx 示例一致）
+#
+# 安装（可选）：
+#   sed 's|__NAVNOTE_ROOT__|/你的路径/navnote|g' deploy/navnote-backend.service.example \
+#     | sudo tee /etc/systemd/system/navnote-backend.service
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now navnote-backend   # enable 可省略若不要开机自启
+#
+# 停止：sudo systemctl stop navnote-backend
+# 日志：journalctl -u navnote-backend -f
+
+[Unit]
+Description=NavNote FastAPI backend (Gunicorn + UvicornWorker)
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+# 运行用户：按服务器环境修改（如 www-data、nginx、当前用户）
+User=www-data
+Group=www-data
+WorkingDirectory=__NAVNOTE_ROOT__/backend
+Environment=PATH=__NAVNOTE_ROOT__/backend/.venv/bin
+Environment=NAVNOTE_SERVER=gunicorn
+Environment=GUNICORN_BIND=127.0.0.1:8000
+# 或使用 start.sh：ExecStart=__NAVNOTE_ROOT__/backend/start.sh
+ExecStart=__NAVNOTE_ROOT__/backend/.venv/bin/gunicorn -c gunicorn.conf.py app.main:app
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

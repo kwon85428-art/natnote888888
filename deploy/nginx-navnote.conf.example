@@ -1,0 +1,82 @@
+# NavNote — Nginx 站点示例
+#
+# 使用前请将 __NAVNOTE_ROOT__ 替换为安装根目录的绝对路径（与 systemd 示例一致）
+#   例：/home/www/navnote  或  ~/apps/navnote  展开后的实际路径
+#
+# 推荐目录结构（仓库根 = NAVNOTE_ROOT）：
+#   __NAVNOTE_ROOT__/frontend/dist/     ← 本机构建后上传的静态文件
+#   __NAVNOTE_ROOT__/backend/           ← Python 后端（start.sh 监听 127.0.0.1:8000）
+#
+# 安装步骤概要：
+#   1. 本机 npm run build，上传 frontend/dist 与 backend/ 等到服务器
+#   2. 服务器 cd backend && ./install.sh --prod，编辑 .env
+#   3. 复制本文件到 Nginx sites，替换 __NAVNOTE_ROOT__ 与 server_name
+#   4. backend/.env 中设置 PUBLIC_SITE_URL=https://你的域名
+# 详见 docs/CONFIGURATION.md、deploy/README.md
+
+server {
+    listen 80;
+    server_name navnote.example.com;
+
+    # 前端静态：指向仓库内 frontend/dist（替换 __NAVNOTE_ROOT__）
+    root __NAVNOTE_ROOT__/frontend/dist;
+    index index.html;
+
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';" always;
+
+    # 站点图标（须存在于 frontend/dist/，勿走 SPA fallback）
+    location ~ ^/(favicon\.ico|favicon\.svg|brand-logo\.svg)$ {
+        try_files $uri =404;
+        access_log off;
+        log_not_found off;
+        expires 7d;
+    }
+
+    # 后端 API（与 backend/start.sh 中 GUNICORN_BIND 端口一致，默认 8000）
+    location ^~ /api/ {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        client_max_body_size 50m;
+    }
+
+    location ^~ /uploads/ {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        client_max_body_size 50m;
+    }
+
+    # SEO：/robots.txt、/sitemap.xml 由后端生成
+    location = /robots.txt {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location = /sitemap.xml {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}

@@ -1,0 +1,109 @@
+/**
+ * 前台公共视觉增强（由 main.ts 在 style.css 之前引入）
+ */
+/* ---------- 页面壳与背景 ---------- */
+body {
+  background:
+    radial-gradient(ellipse 110% 55% at 50% -18%, rgba(37, 99, 235, 0.08), transparent 52%),
+    radial-gradient(ellipse 80% 40% at 100% 0%, rgba(99, 102, 241, 0.04), transparent 45%),
+    var(--page-bg);
+}
+
+.article-detail-shell {
+  background: transparent;
+}
+
+/* ---------- 内容面板（文章列表等） ---------- */
+.error-page__panel {
+  border-radius: var(--pub-radius-lg, 14px);
+  border: 1px solid var(--border-subtle);
+  background: var(--pub-surface-elevated, #fff);
+  box-shadow: var(--pub-shadow);
+}
+
+.article-list-panel {
+  padding: 14px 16px 18px;
+}
+
+/* ---------- 分类胶囊 / 标签 ---------- */
+.cat-pills__btn {
+  border-radius: var(--pub-radius-sm, 8px);
+}
+
+.cat-pills__btn--active {
+  box-shadow: 0 2px 12px rgba(37, 99, 235, 0.28);
+}
+
+/* ---------- 分页 ---------- */
+.pagination-bar .el-pagination.is-background .el-pager li.is-active {
+  background-color: var(--accent);
+}
+
+.pagination-bar .el-pagination.is-background .btn-next,
+.pagination-bar .el-pagination.is-background .btn-prev,
+.pagination-bar .el-pagination.is-background .el-pager li {
+  border-radius: var(--pub-radius-sm, 8px);
+}
+
+/* ---------- Element Plus 前台微调 ---------- */
+.public-main-shell .el-button {
+  font-weight: 600;
+  border-radius: var(--pub-radius-sm, 8px);
+}
+
+.public-main-shell .el-button--primary {
+  --el-button-bg-color: var(--accent);
+  --el-button-border-color: var(--accent);
+  --el-button-hover-bg-color: var(--accent-hover, #1d4ed8);
+  --el-button-hover-border-color: var(--accent-hover, #1d4ed8);
+}
+
+.public-main-shell .el-input__wrapper {
+  border-radius: var(--pub-radius-sm, 8px);
+  transition: box-shadow 0.15s ease;
+}
+
+.public-main-shell .el-input__wrapper.is-focus {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* ---------- 首页侧栏卡片 ---------- */
+.left-card {
+  border-radius: var(--pub-radius-lg, 14px);
+  box-shadow: var(--pub-shadow);
+  border-color: var(--border-subtle);
+}
+
+/* ---------- 网址卡片（与 home/page.css 协同） ---------- */
+.site-card {
+  border-radius: var(--pub-radius, 12px);
+  box-shadow: var(--pub-shadow-sm);
+}
+
+.site-card:hover {
+  box-shadow: var(--pub-shadow-hover);
+}
+
+/* ---------- 文章列表行 ---------- */
+.article-row {
+  border-radius: var(--pub-radius, 12px);
+}
+
+.article-row:hover {
+  box-shadow: var(--pub-shadow-hover);
+}
+
+/* ---------- 文章详情 ---------- */
+.article-detail__card {
+  border-radius: var(--pub-radius-lg, 14px);
+  box-shadow: var(--pub-shadow);
+}
+
+.article-detail__back {
+  border-radius: var(--pub-radius-sm, 8px);
+}
+
+/* ---------- 页脚 ---------- */
+.platform-footer {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}

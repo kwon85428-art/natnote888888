@@ -1,0 +1,248 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/**
+ * 排版：桌面用 rem + 100% 尊重系统字号；手机浏览器（≤768px）固定 16px 根字号，
+ * 避免与系统「大字体」叠加导致整体偏大（微信内置浏览器通常无此叠加）。
+ * 平板（769–900px）沿用 PC 字号阶梯，仅布局走窄屏规则。
+ */
+html {
+  font-size: 100%;
+  scrollbar-gutter: stable;
+}
+
+:root {
+  --font-sans: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --surface: #ffffff;
+  --page-bg: #f1f5f9;
+  --border-subtle: #e2e8f0;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-soft: #eff6ff;
+  --accent-muted: #dbeafe;
+  --nav-border: #e2e8f0;
+  --pub-radius-sm: 8px;
+  --pub-radius: 12px;
+  --pub-radius-lg: 14px;
+  --pub-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --pub-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 6px 22px rgba(15, 23, 42, 0.05);
+  --pub-shadow-hover: 0 10px 28px rgba(37, 99, 235, 0.14);
+  --pub-surface-elevated: #ffffff;
+  --pub-nav-height: 3.625rem;
+  --pub-nav-name-size: 1.1875rem;
+  --pub-nav-sub-size: 0.875rem;
+  --pub-nav-link-size: 1rem;
+  --content-max: 75rem;
+  --pub-content-pad-x: clamp(0.75rem, 3vw, 1.25rem);
+  --pub-content-pad-top: 0.625rem;
+  --pub-content-pad-bottom: calc(1.75rem + var(--safe-bottom));
+  --pub-content-pad-bottom-lg: 0.625rem;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  --el-color-primary: #2563eb;
+  --el-color-primary-light-3: #60a5fa;
+  --el-color-primary-light-5: #93c5fd;
+  --el-color-primary-light-7: #bfdbfe;
+  --el-color-primary-light-8: #dbeafe;
+  --el-color-primary-light-9: #eff6ff;
+  --el-color-primary-dark-2: #1d4ed8;
+  --el-border-radius-base: 8px;
+  --el-border-radius-small: 6px;
+
+  --fs-micro: 0.75rem;
+  --fs-caption: 0.8125rem;
+  --fs-small: 0.875rem;
+  --fs-body: 1rem;
+  --fs-lead: 1.0625rem;
+  --fs-title-sm: 1.125rem;
+  --fs-title: 1.25rem;
+  --fs-title-lg: 1.375rem;
+  --fs-display: 1.625rem;
+
+  --el-font-size-extra-large: 1.5rem;
+  --el-font-size-large: 1.375rem;
+  --el-font-size-medium: 1.125rem;
+  --el-font-size-base: 1rem;
+  --el-font-size-small: 0.9375rem;
+  --el-font-size-extra-small: 0.875rem;
+  --el-font-line-height-primary: 1.625rem;
+
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  color: var(--text);
+  background: var(--page-bg);
+}
+
+/** 窄屏布局：边距、顶栏高度（字号仍用 PC 阶梯，直至 ≤768px） */
+@media (max-width: 900px) {
+  :root {
+    --pub-content-pad-x: 0.5rem;
+    --pub-content-pad-top: 0.5rem;
+    --pub-nav-height: 3.875rem;
+  }
+}
+
+/** 手机端：固定 rem 基准，与微信等 WebView 观感对齐；字号阶梯与桌面一致 */
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1180px) {
+  :root {
+    --pub-content-pad-x: 0.625rem;
+  }
+}
+
+.public-main-shell {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--content-max, 75rem);
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--pub-content-pad-top) var(--pub-content-pad-x) var(--pub-content-pad-bottom);
+}
+
+@media (min-width: 901px) {
+  .public-main-shell {
+    padding-bottom: var(--pub-content-pad-bottom-lg, 0.625rem);
+  }
+}
+
+body {
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@media (max-width: 480px) {
+  :root {
+    --pub-content-pad-x: 0.375rem;
+    --pub-content-pad-top: 0.375rem;
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- 认证页（登录）：居中卡片与表单对齐 ---------- */
+.auth-shell {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.75rem 1rem;
+  background:
+    radial-gradient(ellipse 100% 70% at 50% -10%, rgba(37, 99, 235, 0.12), transparent 55%),
+    var(--page-bg);
+}
+
+.auth-card.el-card {
+  width: min(27.5rem, 100%);
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.05),
+    0 12px 40px rgba(15, 23, 42, 0.1);
+}
+
+.auth-card.el-card .el-card__body {
+  padding: 1.75rem 1.75rem 1.5rem;
+}
+
+.auth-card__title {
+  margin: 0 0 6px;
+  font-size: var(--fs-title-lg);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+}
+
+.auth-card__lead {
+  margin: 0 0 22px;
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.auth-form.el-form .el-form-item {
+  margin-bottom: 20px;
+}
+
+.auth-form.el-form .el-form-item__label {
+  font-weight: 500;
+  color: #374151;
+}
+
+.auth-form.el-form--label-top .el-form-item__label {
+  margin-bottom: 6px;
+  line-height: 1.35;
+}
+
+.auth-form .el-input__wrapper {
+  border-radius: 10px;
+}
+
+.auth-form .el-input,
+.auth-form .el-textarea {
+  width: 100%;
+}
+
+.auth-captcha {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-captcha__q {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: #0f172a;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  letter-spacing: 0.02em;
+}
+
+.auth-captcha__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.auth-captcha__row > .el-input {
+  flex: 1;
+  min-width: 8.75rem;
+}
+
+.auth-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+}
+
+.auth-actions .el-button + .el-button {
+  margin-left: 0;
+}
+
+.auth-alert {
+  margin-top: 22px;
+}
